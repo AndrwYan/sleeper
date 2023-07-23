@@ -9,6 +9,8 @@ import {
 } from './models/reservation.schema';
 
 import { LoggerModule } from 'nestjs-pino';
+import { ConfigModule } from '@nestjs/config';
+import Joi from 'joi';
 
 // 需要import DatabaseModule
 @Module({
@@ -26,6 +28,12 @@ import { LoggerModule } from 'nestjs-pino';
           },
         },
       },
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        MONGDDB_URI: Joi.string().required(),
+      }),
     }),
   ],
   controllers: [ReservationsController],
